@@ -152,8 +152,6 @@ export default function Roster() {
   const TRACKER_SHEET = "Pokemon Fitness Tracker";
   const LEVELXP_SHEET = "LevelXP";
   const STARTER_SHEET = "Starters";
-  const HEADER_ROW_INDEX = 9;
-  const DATA_START_ROW_INDEX = HEADER_ROW_INDEX + 1;
 
   useEffect(() => {
     const fetchXPTable = async () => {
@@ -185,9 +183,9 @@ export default function Roster() {
 
       const rows = trackerData?.values;
       const starters = starterData?.values;
-      if (!rows || rows.length <= HEADER_ROW_INDEX || !starters || starters.length < 2) return;
+      if (!rows || rows.length <= 9 || !starters || starters.length < 2) return;
 
-      const header = rows[HEADER_ROW_INDEX];
+      const header = rows[9];
       const nameIdx = header.indexOf("Trainer");
       const xpIdx = header.indexOf("Total XP");
       const weekXPIdx = header.indexOf("Weekly XP");
@@ -196,7 +194,7 @@ export default function Roster() {
   
       
       const weeklyRows = {};
-      for (let i = DATA_START_ROW_INDEX; i < rows.length; i++) {
+      for (let i = 9; i < rows.length; i++) {
         const row = rows[i];
         const week = row[weekIdx];
         if (!weeklyRows[week]) weeklyRows[week] = [];
@@ -242,7 +240,7 @@ export default function Roster() {
       const seen = new Set();
       const latest = [];
 
-      for (let i = rows.length - 1; i >= DATA_START_ROW_INDEX; i--) {
+      for (let i = rows.length - 1; i > 8; i--) {
         const row = rows[i];
         const name = row[nameIdx];
         const thisWeek = row[weekIdx];
