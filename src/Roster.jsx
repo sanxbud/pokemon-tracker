@@ -57,7 +57,7 @@ const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, onClick }
     Week5: soul,
   };
 
-  const currWeek = 6;
+  const currWeek = 2;
   const weekSlots = [
     { week: "1", side: "left", position: "top" },
     { week: "2", side: "right", position: "top" },
@@ -145,7 +145,7 @@ export default function Roster() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
-  const itemsPerPage = 25;
+  const itemsPerPage = 24;
 
   const SHEET_ID = "1dJNM1ZW_nB4jTvGaA8dAm_S-yWsTH_A19CfVkrQncxs";
   const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
