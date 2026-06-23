@@ -185,7 +185,7 @@ export default function Roster() {
       const starters = starterData?.values;
       if (!rows || rows.length <= 9 || !starters || starters.length < 2) return;
 
-      const header = rows[8];
+      const header = rows[9];
       const nameIdx = header.indexOf("Trainer");
       const xpIdx = header.indexOf("Total XP");
       const weekXPIdx = header.indexOf("Weekly XP");
@@ -215,6 +215,7 @@ export default function Roster() {
         minutes: header.indexOf("Minutes"),
         yoga: header.indexOf("Yoga Days"),
         bingo: header.indexOf("Bingo"),
+        walk: header.indexOf("Walk Club"),
         challenges: header.indexOf("MWF Challenges"),
         stepsXP: header.indexOf("Step XP"),
         minutesXP: header.indexOf("Minute XP"),
@@ -225,11 +226,13 @@ export default function Roster() {
         totalMin: header.indexOf("total min"),
         totalYoga: header.indexOf("total yoga"),
         totalBingo: header.indexOf("total bingo"),
+        totalWalk: header.indexOf("total walk"),
         totalMWF: header.indexOf("total mwf"),
         totalStepsXP: header.indexOf("total steps xp"),
         totalMinXP: header.indexOf("total min xp"),
         totalYogaXP: header.indexOf("total yoga xp"),
         totalBingoXP: header.indexOf("total bingo xp"),
+        totalWalkXP: header.indexOf("total walk xp"),
         totalMWFXP: header.indexOf("total mwf xp")
       };
 
@@ -295,6 +298,7 @@ export default function Roster() {
             totalMinXP: row[statIndices.totalMinXP] || 0,
             totalYogaXP: row[statIndices.totalYogaXP] || 0,
             totalBingoXP: row[statIndices.totalBingoXP] || 0,
+            totalWalkXP: row[statIndices.totalWalkXP] || 0,
             totalMWFXP: row[statIndices.totalMWFXP] || 0
           }
         });
@@ -403,8 +407,9 @@ export default function Roster() {
               <p className="font-semibold text-lg mt-4">Total stats:</p>
               <p>{selectedUser.stats.totalSteps} steps ({selectedUser.stats.totalStepsXP} XP)</p>
               <p>{selectedUser.stats.totalMin} minutes ({selectedUser.stats.totalMinXP} XP)</p>
-              <p>{selectedUser.stats.totalYoga} yoga ({selectedUser.stats.totalYogaXP} XP)</p>
-              <p>{selectedUser.stats.totalBingo} bingo ({selectedUser.stats.totalBingoXP} XP)</p>
+              <p>{selectedUser.stats.totalYoga} daily yogas ({selectedUser.stats.totalYogaXP} XP)</p>
+              <p>{selectedUser.stats.totalBingo} bingos ({selectedUser.stats.totalBingoXP} XP)</p>
+              <p>{selectedUser.stats.totalWalk} Walk Club walks ({selectedUser.stats.totalWalkXP} XP)</p>
               <p>{selectedUser.stats.totalMWF} challenges ({selectedUser.stats.totalMWFXP} XP)</p>
               <p className="font-semibold">Total: {selectedUser.totalXP} XP</p>
             </div>
