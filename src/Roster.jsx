@@ -6,25 +6,43 @@ import rainbow from './assets/rainbow.png'
 import soul from './assets/soul.png'
 
 const pokemonImages = {
-  Egg: "https://i.imgur.com/H42miYd.png",
-  Bulbasaur: "https://img.pokemondb.net/artwork/bulbasaur.jpg",
-  Ivysaur: "https://img.pokemondb.net/artwork/ivysaur.jpg",
-  Venusaur: "https://img.pokemondb.net/artwork/venusaur.jpg",
-  Charmander: "https://img.pokemondb.net/artwork/charmander.jpg",
-  Charmeleon: "https://img.pokemondb.net/artwork/charmeleon.jpg",
-  Charizard: "https://img.pokemondb.net/artwork/charizard.jpg",
-  Squirtle: "https://img.pokemondb.net/artwork/squirtle.jpg",
-  Wartortle: "https://img.pokemondb.net/artwork/wartortle.jpg",
-  Blastoise: "https://img.pokemondb.net/artwork/blastoise.jpg",
-  Chikorita: "https://img.pokemondb.net/artwork/chikorita.jpg",
-  Bayleef: "https://img.pokemondb.net/artwork/bayleef.jpg",
-  Meganium: "https://img.pokemondb.net/artwork/meganium.jpg",
-  Cyndaquil: "https://img.pokemondb.net/artwork/cyndaquil.jpg",
-  Quilava: "https://img.pokemondb.net/artwork/quilava.jpg",
-  Typhlosion: "https://img.pokemondb.net/artwork/typhlosion.jpg",
-  Totodile: "https://img.pokemondb.net/artwork/totodile.jpg",
-  Croconaw: "https://img.pokemondb.net/artwork/croconaw.jpg",
-  Feraligatr: "https://img.pokemondb.net/artwork/feraligatr.jpg"
+  Egg: "https://archives.bulbagarden.net/media/upload/1/1e/Spr_6x_Egg.png",
+  Bulbasaur: "https://img.pokemondb.net/sprites/home/normal/bulbasaur.png",
+  Ivysaur: "https://img.pokemondb.net/sprites/home/normal/ivysaur.png",
+  Venusaur: "https://img.pokemondb.net/sprites/home/normal/venusaur.png",
+  Charmander: "https://img.pokemondb.net/sprites/home/normal/charmander.png",
+  Charmeleon: "https://img.pokemondb.net/sprites/home/normal/charmeleon.png",
+  Charizard: "https://img.pokemondb.net/sprites/home/normal/charizard.png",
+  Squirtle: "https://img.pokemondb.net/sprites/home/normal/squirtle.png",
+  Wartortle: "https://img.pokemondb.net/sprites/home/normal/wartortle.png",
+  Blastoise: "https://img.pokemondb.net/sprites/home/normal/blastoise.png",
+  Chikorita: "https://img.pokemondb.net/sprites/home/normal/chikorita.png",
+  Bayleef: "https://img.pokemondb.net/sprites/home/normal/bayleef.png",
+  Meganium: "https://img.pokemondb.net/sprites/home/normal/meganium.png",
+  Cyndaquil: "https://img.pokemondb.net/sprites/home/normal/cyndaquil.png",
+  Quilava: "https://img.pokemondb.net/sprites/home/normal/quilava.png",
+  Typhlosion: "https://img.pokemondb.net/sprites/home/normal/typhlosion.png",
+  Totodile: "https://img.pokemondb.net/sprites/home/normal/totodile.png",
+  Croconaw: "https://img.pokemondb.net/sprites/home/normal/croconaw.png",
+  Feraligatr: "https://img.pokemondb.net/sprites/home/normal/feraligatr.png",
+  Treecko: "https://img.pokemondb.net/sprites/home/normal/treecko.png",
+  Grovyle: "https://img.pokemondb.net/sprites/home/normal/grovyle.png",
+  Sceptile: "https://img.pokemondb.net/sprites/home/normal/sceptile.png",
+  Mudkip: "https://img.pokemondb.net/sprites/home/normal/mudkip.png",
+  Marshtomp: "https://img.pokemondb.net/sprites/home/normal/marshtomp.png",
+  Swampert: "https://img.pokemondb.net/sprites/home/normal/swampert.png",
+  Torchic: "https://img.pokemondb.net/sprites/home/normal/torchic.png",
+  Combusken: "https://img.pokemondb.net/sprites/home/normal/combusken.png",
+  Blaziken: "https://img.pokemondb.net/sprites/home/normal/blaziken.png",
+  Chespin: "https://img.pokemondb.net/sprites/home/normal/chespin.png",
+  Quilladin: "https://img.pokemondb.net/sprites/home/normal/quilladin.png",
+  Chesnaught: "https://img.pokemondb.net/sprites/home/normal/chesnaught.png",
+  Fennekin: "https://img.pokemondb.net/sprites/home/normal/fennekin.png",
+  Braixen: "https://img.pokemondb.net/sprites/home/normal/braixen.png",
+  Delphox: "https://img.pokemondb.net/sprites/home/normal/delphox.png",
+  Froakie: "https://img.pokemondb.net/sprites/home/normal/froakie.png",
+  Frogadier: "https://img.pokemondb.net/sprites/home/normal/frogadier.png",
+  Greninja: "https://img.pokemondb.net/sprites/home/normal/greninja.png"
 };
 
 const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, onClick }) => {
@@ -129,7 +147,7 @@ export default function Roster() {
   const [selectedUser, setSelectedUser] = useState(null);
   const itemsPerPage = 25;
 
-  const SHEET_ID = "1rQgIaNxlXy5AVEjfeeI0Xbk7lcl1iH0Ds9M3Woq_FSY";
+  const SHEET_ID = "1dJNM1ZW_nB4jTvGaA8dAm_S-yWsTH_A19CfVkrQncxs";
   const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
   const TRACKER_SHEET = "Pokemon Fitness Tracker";
   const LEVELXP_SHEET = "LevelXP";
