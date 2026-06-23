@@ -6,7 +6,7 @@ import rainbow from './assets/rainbow.png'
 import soul from './assets/soul.png'
 
 const pokemonImages = {
-  Egg: "https://archives.bulbagarden.net/media/upload/1/1e/Spr_6x_Egg.png",
+  Egg: "https://static.wikia.nocookie.net/pokemon-masters-ex-game/images/2/26/Egg.png",
   Bulbasaur: "https://img.pokemondb.net/sprites/home/normal/bulbasaur.png",
   Ivysaur: "https://img.pokemondb.net/sprites/home/normal/ivysaur.png",
   Venusaur: "https://img.pokemondb.net/sprites/home/normal/venusaur.png",
