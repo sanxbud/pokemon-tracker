@@ -207,7 +207,9 @@ export default function Roster() {
         const sorted = [...entries].sort((a, b) => {
           return Number(b[weekXPIdx] || 0) - Number(a[weekXPIdx] || 0);
         });
-        weeklyTop10[week] = sorted.slice(0, 10).map(row => row[nameIdx]);
+        weeklyTop10[week] = sorted
+          .slice(0, week === "1" ? 12 : 10)
+          .map(row => row[nameIdx]);
       }
 
       const statIndices = {
