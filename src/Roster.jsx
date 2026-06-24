@@ -194,7 +194,7 @@ export default function Roster() {
   
       
       const weeklyRows = {};
-      for (let i = 9; i < rows.length; i++) {
+      for (let i = 10; i < rows.length; i++) {
         const row = rows[i];
         const week = row[weekIdx];
         if (!weeklyRows[week]) weeklyRows[week] = [];
@@ -240,7 +240,7 @@ export default function Roster() {
       const seen = new Set();
       const latest = [];
 
-      for (let i = rows.length - 1; i > 8; i--) {
+      for (let i = rows.length - 1; i > 9; i--) {
         const row = rows[i];
         const name = row[nameIdx];
         const thisWeek = row[weekIdx];
@@ -318,7 +318,7 @@ export default function Roster() {
   );
 
   const sortedUsers = [...filteredUsers].sort((a, b) => {
-    if (sortOption === "level") return b.numericLevel - a.numericLevel;
+    if (sortOption === "level") return b.totalXP - a.totalXP;
     if (sortOption === "username") return a.name.localeCompare(b.name);
     if (sortOption === "weekXP") return b.weekXP - a.weekXP;
     return 0;
