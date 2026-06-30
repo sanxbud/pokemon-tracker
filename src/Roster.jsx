@@ -414,7 +414,7 @@ export default function Roster() {
               <p>{selectedUser.stats.totalYoga} daily yogas ({selectedUser.stats.totalYogaXP} XP)</p>
               <p>{selectedUser.stats.totalBingo} bingos ({selectedUser.stats.totalBingoXP} XP)</p>
               <p>{selectedUser.stats.totalWalk} Walk Club walks ({selectedUser.stats.totalWalkXP} XP)</p>
-              <p>{selectedUser.stats.totalMWF} challenges ({selectedUser.stats.totalMWFXP} XP)</p>
+              <p>{selectedUser.stats.totalMWF} MWF challenges ({selectedUser.stats.totalMWFXP} XP)</p>
               <p className="font-semibold">Total: {selectedUser.totalXP} XP</p>
             </div>
           </div>
