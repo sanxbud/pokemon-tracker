@@ -45,7 +45,7 @@ const pokemonImages = {
   Greninja: "https://img.pokemondb.net/sprites/home/normal/greninja.png"
 };
 
-const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, onClick }) => {
+const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, currentWeek, onClick }) => {
   const percent = isMaxed ? 100 : Math.floor((xp / nextLevelXP) * 100);
   const imageUrl = pokemonImages[pokemon] || pokemonImages["Egg"];
 
@@ -57,7 +57,6 @@ const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, onClick }
     Week5: soul,
   };
 
-  const currWeek = 3;
   const weekSlots = [
     { week: "1", side: "left", position: "top" },
     { week: "2", side: "right", position: "top" },
@@ -67,7 +66,7 @@ const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, onClick }
   ];
 
   const badgePositions = weekSlots.filter(
-    (slot) => parseInt(slot.week) < currWeek && user.badges.includes(slot.week)
+    (slot) => parseInt(slot.week) < currentWeek && user.badges.includes(slot.week)
   );
 
   const renderBadge = (badge) => (
@@ -138,6 +137,8 @@ const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, onClick }
 
 const MAX_LEVEL = 60;
 
+const getWeekNumber = (week) => Number(String(week || "").replace(/\D/g, ""));
+
 export default function Roster() {
   const [users, setUsers] = useState([]);
   const [xpTable, setXpTable] = useState([]);
@@ -145,6 +146,7 @@ export default function Roster() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [currentWeek, setCurrentWeek] = useState(1);
   const itemsPerPage = 24;
 
   const SHEET_ID = "1dJNM1ZW_nB4jTvGaA8dAm_S-yWsTH_A19CfVkrQncxs";
@@ -191,14 +193,27 @@ export default function Roster() {
       const weekXPIdx = header.indexOf("Weekly XP");
       const pokemonIdx = header.indexOf("Pokemon");
       const weekIdx = header.indexOf("Week");
+      const weekNumbers = rows
+        .slice(10)
+        .map(row => getWeekNumber(row[weekIdx]))
+        .filter(Number.isFinite);
+      const latestWeek = Math.max(...weekNumbers, 1);
+      const lastWeek = Math.max(latestWeek - 1, 1);
+      setCurrentWeek(latestWeek);
   
       
       const weeklyRows = {};
+      const rowsByTrainerAndWeek = {};
       for (let i = 10; i < rows.length; i++) {
         const row = rows[i];
+        const name = row[nameIdx];
         const week = row[weekIdx];
         if (!weeklyRows[week]) weeklyRows[week] = [];
         weeklyRows[week].push(row);
+        if (name) {
+          const normalizedWeek = getWeekNumber(week);
+          rowsByTrainerAndWeek[`${name}-${normalizedWeek}`] = row;
+        }
       }
   
      
@@ -245,11 +260,11 @@ export default function Roster() {
       for (let i = rows.length - 1; i > 9; i--) {
         const row = rows[i];
         const name = row[nameIdx];
-        const thisWeek = row[weekIdx];
         if (!name || seen.has(name)) continue;
 
         const totalXP = Number(row[xpIdx] || 0);
-        const weekXP = Number(row[weekXPIdx] || 0);
+        const lastWeekRow = rowsByTrainerAndWeek[`${name}-${lastWeek}`];
+        const weekXP = Number(lastWeekRow?.[weekXPIdx] || 0);
 
         let level = 1;
         for (let j = xpTable.length - 1; j >= 0; j--) {
@@ -344,7 +359,7 @@ export default function Roster() {
         >
           <option value="username">Username</option>
           <option value="level">Level</option>
-          <option value="weekXP">Weekly XP</option>
+          <option value="weekXP">Last Week XP</option>
         </select>
         <input
           type="text"
@@ -368,6 +383,7 @@ export default function Roster() {
             xp={user.totalXP}
             nextLevelXP={user.nextLevelXP}
             isMaxed={user.isMaxed}
+            currentWeek={currentWeek}
             onClick={() => setSelectedUser(user)}
           />
         ))}
@@ -405,7 +421,7 @@ export default function Roster() {
             <p className="text-lg">Pokémon: {selectedUser.pokemon}</p>
             <p className="text-md">Level: {selectedUser.level}</p>
             <p className="text-md">Total XP: {selectedUser.totalXP}</p>
-            <p className="text-md">Weekly XP: {selectedUser.weekXP}</p>
+            <p className="text-md">Last Week XP: {selectedUser.weekXP}</p>
 
             <div className="mt-4 space-y-2">
               <p className="font-semibold text-lg mt-4">Total stats:</p>
