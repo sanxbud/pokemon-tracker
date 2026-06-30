@@ -138,6 +138,7 @@ const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, latestSco
 const MAX_LEVEL = 60;
 
 const getWeekNumber = (week) => Number(week);
+const getWeeklyXP = (row, weekXPIdx) => Number(row[weekXPIdx] || 0);
 
 export default function Roster() {
   const [users, setUsers] = useState([]);
@@ -195,7 +196,7 @@ export default function Roster() {
       const weekIdx = header.indexOf("Week");
       const weeksWithXP = rows
         .slice(10)
-        .filter(row => String(row[weekXPIdx] || "").trim() !== "")
+        .filter(row => getWeeklyXP(row, weekXPIdx) > 0)
         .map(row => getWeekNumber(row[weekIdx]))
         .filter(Number.isFinite);
       const lastWeek = Math.max(...weeksWithXP, 1);
@@ -207,7 +208,7 @@ export default function Roster() {
         const row = rows[i];
         const week = row[weekIdx];
         const weekNumber = getWeekNumber(week);
-        if (Number.isFinite(weekNumber)) {
+        if (Number.isFinite(weekNumber) && getWeeklyXP(row, weekXPIdx) > 0) {
           if (!weeklyRows[weekNumber]) weeklyRows[weekNumber] = [];
           weeklyRows[weekNumber].push(row);
         }
@@ -263,7 +264,7 @@ export default function Roster() {
         const lastWeekRow = rows.find((entry) =>
           entry[nameIdx] === name && getWeekNumber(entry[weekIdx]) === lastWeek
         );
-        const weekXP = Number(lastWeekRow?.[weekXPIdx] || 0);
+        const weekXP = getWeeklyXP(lastWeekRow || [], weekXPIdx);
 
         let level = 1;
         for (let j = xpTable.length - 1; j >= 0; j--) {
@@ -420,7 +421,7 @@ export default function Roster() {
             <p className="text-lg">Pokémon: {selectedUser.pokemon}</p>
             <p className="text-md">Level: {selectedUser.level}</p>
             <p className="text-md">Total XP: {selectedUser.totalXP}</p>
-            <p className="text-md">Last Week XP: {selectedUser.weekXP}</p>
+            <p className="text-md">Last Week's XP: {selectedUser.weekXP}</p>
 
             <div className="mt-4 space-y-2">
               <p className="font-semibold text-lg mt-4">Total stats:</p>
