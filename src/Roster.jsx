@@ -45,7 +45,7 @@ const pokemonImages = {
   Greninja: "https://img.pokemondb.net/sprites/home/normal/greninja.png"
 };
 
-const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, currentWeek, onClick }) => {
+const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, latestScoredWeek, onClick }) => {
   const percent = isMaxed ? 100 : Math.floor((xp / nextLevelXP) * 100);
   const imageUrl = pokemonImages[pokemon] || pokemonImages["Egg"];
 
@@ -66,7 +66,7 @@ const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, currentWe
   ];
 
   const badgePositions = weekSlots.filter(
-    (slot) => parseInt(slot.week) < currentWeek && user.badges.includes(slot.week)
+    (slot) => parseInt(slot.week) <= latestScoredWeek && user.badges.includes(slot.week)
   );
 
   const renderBadge = (badge) => (
@@ -137,7 +137,7 @@ const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, currentWe
 
 const MAX_LEVEL = 60;
 
-const getWeekNumber = (week) => Number(String(week || "").replace(/\D/g, ""));
+const getWeekNumber = (week) => Number(week);
 
 export default function Roster() {
   const [users, setUsers] = useState([]);
@@ -146,7 +146,7 @@ export default function Roster() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [currentWeek, setCurrentWeek] = useState(1);
+  const [latestScoredWeek, setLatestScoredWeek] = useState(1);
   const itemsPerPage = 24;
 
   const SHEET_ID = "1dJNM1ZW_nB4jTvGaA8dAm_S-yWsTH_A19CfVkrQncxs";
@@ -193,26 +193,23 @@ export default function Roster() {
       const weekXPIdx = header.indexOf("Weekly XP");
       const pokemonIdx = header.indexOf("Pokemon");
       const weekIdx = header.indexOf("Week");
-      const weekNumbers = rows
+      const weeksWithXP = rows
         .slice(10)
+        .filter(row => String(row[weekXPIdx] || "").trim() !== "")
         .map(row => getWeekNumber(row[weekIdx]))
         .filter(Number.isFinite);
-      const latestWeek = Math.max(...weekNumbers, 1);
-      const lastWeek = Math.max(latestWeek - 1, 1);
-      setCurrentWeek(latestWeek);
+      const lastWeek = Math.max(...weeksWithXP, 1);
+      setLatestScoredWeek(lastWeek);
   
       
       const weeklyRows = {};
-      const rowsByTrainerAndWeek = {};
       for (let i = 10; i < rows.length; i++) {
         const row = rows[i];
-        const name = row[nameIdx];
         const week = row[weekIdx];
-        if (!weeklyRows[week]) weeklyRows[week] = [];
-        weeklyRows[week].push(row);
-        if (name) {
-          const normalizedWeek = getWeekNumber(week);
-          rowsByTrainerAndWeek[`${name}-${normalizedWeek}`] = row;
+        const weekNumber = getWeekNumber(week);
+        if (Number.isFinite(weekNumber)) {
+          if (!weeklyRows[weekNumber]) weeklyRows[weekNumber] = [];
+          weeklyRows[weekNumber].push(row);
         }
       }
   
@@ -263,7 +260,9 @@ export default function Roster() {
         if (!name || seen.has(name)) continue;
 
         const totalXP = Number(row[xpIdx] || 0);
-        const lastWeekRow = rowsByTrainerAndWeek[`${name}-${lastWeek}`];
+        const lastWeekRow = rows.find((entry) =>
+          entry[nameIdx] === name && getWeekNumber(entry[weekIdx]) === lastWeek
+        );
         const weekXP = Number(lastWeekRow?.[weekXPIdx] || 0);
 
         let level = 1;
@@ -383,7 +382,7 @@ export default function Roster() {
             xp={user.totalXP}
             nextLevelXP={user.nextLevelXP}
             isMaxed={user.isMaxed}
-            currentWeek={currentWeek}
+            latestScoredWeek={latestScoredWeek}
             onClick={() => setSelectedUser(user)}
           />
         ))}
