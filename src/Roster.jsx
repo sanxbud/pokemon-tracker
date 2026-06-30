@@ -199,7 +199,8 @@ export default function Roster() {
         .filter(row => getWeeklyXP(row, weekXPIdx) > 0)
         .map(row => getWeekNumber(row[weekIdx]))
         .filter(Number.isFinite);
-      const lastWeek = Math.max(...weeksWithXP, 1);
+      const currentWeek = Math.max(...weeksWithXP, 1);
+      const lastWeek = Math.max(currentWeek - 1, 1);
       setLatestScoredWeek(lastWeek);
   
       
@@ -359,7 +360,7 @@ export default function Roster() {
         >
           <option value="username">Username</option>
           <option value="level">Level</option>
-          <option value="weekXP">Last Week XP</option>
+          <option value="weekXP">Last Week's XP</option>
         </select>
         <input
           type="text"
