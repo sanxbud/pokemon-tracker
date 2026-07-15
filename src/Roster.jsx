@@ -135,7 +135,7 @@ const PokemonCard = ({ user, pokemon, level, xp, nextLevelXP, isMaxed, latestSco
   );
 };
 
-const MAX_LEVEL = 60;
+const MAX_LEVEL = 64;
 
 const getWeekNumber = (week) => Number(week);
 const getWeeklyXP = (row, weekXPIdx) => Number(row[weekXPIdx] || 0);
