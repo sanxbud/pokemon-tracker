@@ -201,7 +201,7 @@ export default function Roster() {
         .filter(Number.isFinite);
       const currentWeek = Math.max(...weeksWithXP, 1);
       const lastWeek = Math.max(currentWeek - 1, 1);
-      setLatestScoredWeek(lastWeek);
+      setLatestScoredWeek(currentWeek);
   
       
       const weeklyRows = {};
